@@ -36,12 +36,3 @@
   font-size: 13px;
   color: var(--color-text-faint);
 }
-
-.admin-link {
-  color: var(--color-text-faint);
-  text-decoration: underline;
-}
-
-.admin-link:hover {
-  color: var(--color-text-muted);
-}

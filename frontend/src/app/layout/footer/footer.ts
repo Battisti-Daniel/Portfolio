@@ -1,11 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { ProfileService } from '../../core/services/profile';
 import { Profile } from '../../core/models/profile';
 
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './footer.html',
   styleUrl: './footer.css',
 })

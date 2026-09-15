@@ -1,0 +1,29 @@
+<section class="section">
+  <div class="container narrow">
+    <a routerLink="/blog" class="back-link">← Voltar para o blog</a>
+
+    @if (loading()) {
+      <p class="skeleton">Carregando post…</p>
+    } @else if (notFound()) {
+      <div class="empty-state">Post não encontrado.</div>
+    } @else if (post(); as p) {
+      <article>
+        <header class="post-header">
+          <div class="post-meta">
+            @if (p.publishedAt) {
+              <time>{{ p.publishedAt | date: "dd 'de' MMMM 'de' y" }}</time>
+            }
+            <div class="tag-list">
+              @for (tag of p.tags; track tag) {
+                <span class="tag">{{ tag }}</span>
+              }
+            </div>
+          </div>
+          <h1>{{ p.title }}</h1>
+        </header>
+
+        <div class="post-content" [innerHTML]="contentHtml()"></div>
+      </article>
+    }
+  </div>
+</section>

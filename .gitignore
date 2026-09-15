@@ -1,0 +1,15 @@
+# SO
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# editores/IDEs
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+
+# env locais (backend/frontend já têm seus próprios .gitignore)
+.env
+.env.local
+*.log

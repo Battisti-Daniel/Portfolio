@@ -1,0 +1,89 @@
+<div class="page-head">
+  <h1>Blog</h1>
+  <p>Gerencie os posts do blog. Rascunhos ficam salvos, mas não aparecem no site até publicados.</p>
+</div>
+
+@if (errorMessage()) {
+  <div class="alert alert-error">{{ errorMessage() }}</div>
+}
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="card form-card">
+  <h2>{{ editingId() ? 'Editar post' : 'Novo post' }}</h2>
+
+  <div class="form-field">
+    <label for="title">Título</label>
+    <input id="title" type="text" formControlName="title" />
+  </div>
+
+  <div class="form-field">
+    <label for="slug">Slug (opcional)</label>
+    <input id="slug" type="text" formControlName="slug" placeholder="gerado automaticamente a partir do título" />
+  </div>
+
+  <div class="form-field">
+    <label for="summary">Resumo</label>
+    <textarea id="summary" formControlName="summary" rows="2"></textarea>
+  </div>
+
+  <div class="form-field">
+    <label for="content">Conteúdo (Markdown)</label>
+    <textarea id="content" formControlName="content" rows="12" class="content-area"></textarea>
+  </div>
+
+  <div class="form-field">
+    <label for="tags">Tags</label>
+    <input id="tags" type="text" formControlName="tags" placeholder="angular, spring, backend" />
+    <span class="hint">Separe por vírgula.</span>
+  </div>
+
+  <div class="checkbox-field">
+    <input id="published" type="checkbox" formControlName="published" />
+    <label for="published">Publicado</label>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary" [disabled]="saving()">
+      {{ saving() ? 'Salvando…' : editingId() ? 'Salvar alterações' : 'Adicionar post' }}
+    </button>
+    @if (editingId()) {
+      <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+    }
+  </div>
+</form>
+
+<div class="list-head">
+  <h2>Posts cadastrados</h2>
+</div>
+
+@if (loading()) {
+  <p class="skeleton">Carregando…</p>
+} @else if (posts().length === 0) {
+  <div class="empty-state">Nenhum post cadastrado ainda.</div>
+} @else {
+  <ul class="item-list">
+    @for (post of posts(); track post.id) {
+      <li class="card item-row">
+        <div class="item-info">
+          <div class="item-title-row">
+            <strong>{{ post.title }}</strong>
+            @if (post.published) {
+              <span class="badge badge-success">Publicado</span>
+            } @else {
+              <span class="badge badge-warning">Rascunho</span>
+            }
+          </div>
+          <p>{{ post.summary }}</p>
+          <div class="tag-list">
+            @for (tag of post.tags; track tag) {
+              <span class="tag">{{ tag }}</span>
+            }
+          </div>
+        </div>
+        <div class="item-actions">
+          <button type="button" class="btn btn-secondary btn-sm" (click)="edit(post)">Editar</button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="remove(post)">Excluir</button>
+        </div>
+      </li>
+    }
+  </ul>
+}

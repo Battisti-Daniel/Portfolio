@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start", "--prefix", "frontend"],
+      "port": 4200
+    },
+    {
+      "name": "studyflow-frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start", "--prefix", "C:\\Users\\danie\\OneDrive\\Desktop\\studyflow\\frontend"],
+      "port": 4300
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Roteiro</span>
+      <h1>Planos</h1>
+      <p>O que estou estudando, construindo e planejando para os próximos passos.</p>
+    </div>
+
+    @if (loading()) {
+      <p class="skeleton">Carregando planos…</p>
+    } @else if (plans().length === 0) {
+      <div class="empty-state">Nenhum plano cadastrado ainda.</div>
+    } @else {
+      <ol class="timeline">
+        @for (plan of plans(); track plan.id) {
+          <li class="timeline-item">
+            <div class="timeline-marker" [class]="markerClass(plan.status)"></div>
+            <div class="card timeline-card">
+              <div class="timeline-head">
+                <span class="badge" [class]="statusClass(plan.status)">{{ statusLabel(plan.status) }}</span>
+                @if (plan.targetDate) {
+                  <span class="target-date">{{ plan.targetDate }}</span>
+                }
+              </div>
+              <h3>{{ plan.title }}</h3>
+              <p>{{ plan.description }}</p>
+            </div>
+          </li>
+        }
+      </ol>
+    }
+  </div>
+</section>

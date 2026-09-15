@@ -1,0 +1,68 @@
+<div class="page-head">
+  <h1>Perfil</h1>
+  <p>Essas informações aparecem na página inicial e no rodapé do site.</p>
+</div>
+
+@if (loading()) {
+  <p class="skeleton">Carregando…</p>
+} @else {
+  @if (successMessage()) {
+    <div class="alert alert-success">{{ successMessage() }}</div>
+  }
+  @if (errorMessage()) {
+    <div class="alert alert-error">{{ errorMessage() }}</div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="card form-card">
+    <div class="form-field">
+      <label for="name">Nome</label>
+      <input id="name" type="text" formControlName="name" />
+    </div>
+
+    <div class="form-field">
+      <label for="title">Título / cargo</label>
+      <input id="title" type="text" formControlName="title" placeholder="Ex.: Desenvolvedor(a) Full Stack" />
+    </div>
+
+    <div class="form-field">
+      <label for="bio">Bio</label>
+      <textarea id="bio" formControlName="bio" rows="5"></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" formControlName="email" />
+      </div>
+      <div class="form-field">
+        <label for="location">Localização</label>
+        <input id="location" type="text" formControlName="location" />
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="avatarUrl">URL da foto</label>
+      <input id="avatarUrl" type="text" formControlName="avatarUrl" placeholder="https://…" />
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="githubUrl">GitHub</label>
+        <input id="githubUrl" type="text" formControlName="githubUrl" placeholder="https://github.com/…" />
+      </div>
+      <div class="form-field">
+        <label for="linkedinUrl">LinkedIn</label>
+        <input id="linkedinUrl" type="text" formControlName="linkedinUrl" placeholder="https://linkedin.com/in/…" />
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="xUrl">X / Twitter</label>
+      <input id="xUrl" type="text" formControlName="xUrl" placeholder="https://x.com/…" />
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="saving()">
+      {{ saving() ? 'Salvando…' : 'Salvar alterações' }}
+    </button>
+  </form>
+}

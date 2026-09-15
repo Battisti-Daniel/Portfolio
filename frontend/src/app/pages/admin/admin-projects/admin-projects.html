@@ -1,0 +1,102 @@
+<div class="page-head">
+  <h1>Projetos</h1>
+  <p>Gerencie os projetos exibidos no site.</p>
+</div>
+
+@if (errorMessage()) {
+  <div class="alert alert-error">{{ errorMessage() }}</div>
+}
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="card form-card">
+  <h2>{{ editingId() ? 'Editar projeto' : 'Novo projeto' }}</h2>
+
+  <div class="form-field">
+    <label for="title">Título</label>
+    <input id="title" type="text" formControlName="title" />
+  </div>
+
+  <div class="form-field">
+    <label for="description">Descrição</label>
+    <textarea id="description" formControlName="description" rows="3"></textarea>
+  </div>
+
+  <div class="form-field">
+    <label for="techStack">Tecnologias</label>
+    <input id="techStack" type="text" formControlName="techStack" placeholder="Angular, Spring Boot, PostgreSQL" />
+    <span class="hint">Separe por vírgula.</span>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label for="repoUrl">Link do repositório</label>
+      <input id="repoUrl" type="text" formControlName="repoUrl" placeholder="https://github.com/…" />
+    </div>
+    <div class="form-field">
+      <label for="demoUrl">Link de demonstração</label>
+      <input id="demoUrl" type="text" formControlName="demoUrl" placeholder="https://…" />
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label for="imageUrl">URL da imagem</label>
+    <input id="imageUrl" type="text" formControlName="imageUrl" placeholder="https://…" />
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label for="displayOrder">Ordem de exibição</label>
+      <input id="displayOrder" type="number" formControlName="displayOrder" />
+    </div>
+    <div class="form-field">
+      <label>&nbsp;</label>
+      <div class="checkbox-field">
+        <input id="featured" type="checkbox" formControlName="featured" />
+        <label for="featured">Projeto em destaque</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary" [disabled]="saving()">
+      {{ saving() ? 'Salvando…' : editingId() ? 'Salvar alterações' : 'Adicionar projeto' }}
+    </button>
+    @if (editingId()) {
+      <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+    }
+  </div>
+</form>
+
+<div class="list-head">
+  <h2>Projetos cadastrados</h2>
+</div>
+
+@if (loading()) {
+  <p class="skeleton">Carregando…</p>
+} @else if (projects().length === 0) {
+  <div class="empty-state">Nenhum projeto cadastrado ainda.</div>
+} @else {
+  <ul class="item-list">
+    @for (project of projects(); track project.id) {
+      <li class="card item-row">
+        <div class="item-info">
+          <div class="item-title-row">
+            <strong>{{ project.title }}</strong>
+            @if (project.featured) {
+              <span class="badge badge-info">Destaque</span>
+            }
+          </div>
+          <p>{{ project.description }}</p>
+          <div class="tag-list">
+            @for (tech of project.techStack; track tech) {
+              <span class="tag">{{ tech }}</span>
+            }
+          </div>
+        </div>
+        <div class="item-actions">
+          <button type="button" class="btn btn-secondary btn-sm" (click)="edit(project)">Editar</button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="remove(project)">Excluir</button>
+        </div>
+      </li>
+    }
+  </ul>
+}

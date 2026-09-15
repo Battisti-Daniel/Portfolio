@@ -1,0 +1,24 @@
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="sidebar-head">
+      <span class="eyebrow">Admin</span>
+      <p class="username">{{ auth.username() }}</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a routerLink="/admin/perfil" routerLinkActive="active">Perfil</a>
+      <a routerLink="/admin/projetos" routerLinkActive="active">Projetos</a>
+      <a routerLink="/admin/planos" routerLinkActive="active">Planos</a>
+      <a routerLink="/admin/blog" routerLinkActive="active">Blog</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a routerLink="/" class="view-site">Ver site ↗</a>
+      <button type="button" class="btn btn-secondary btn-sm" (click)="logout()">Sair</button>
+    </div>
+  </aside>
+
+  <div class="admin-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

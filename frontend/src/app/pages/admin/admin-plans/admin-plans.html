@@ -1,0 +1,82 @@
+<div class="page-head">
+  <h1>Planos</h1>
+  <p>Gerencie os planos e objetivos exibidos no site.</p>
+</div>
+
+@if (errorMessage()) {
+  <div class="alert alert-error">{{ errorMessage() }}</div>
+}
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="card form-card">
+  <h2>{{ editingId() ? 'Editar plano' : 'Novo plano' }}</h2>
+
+  <div class="form-field">
+    <label for="title">Título</label>
+    <input id="title" type="text" formControlName="title" />
+  </div>
+
+  <div class="form-field">
+    <label for="description">Descrição</label>
+    <textarea id="description" formControlName="description" rows="3"></textarea>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label for="status">Status</label>
+      <select id="status" formControlName="status">
+        @for (option of statusOptions; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-field">
+      <label for="targetDate">Data alvo (opcional)</label>
+      <input id="targetDate" type="date" formControlName="targetDate" />
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label for="displayOrder">Ordem de exibição</label>
+    <input id="displayOrder" type="number" formControlName="displayOrder" />
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary" [disabled]="saving()">
+      {{ saving() ? 'Salvando…' : editingId() ? 'Salvar alterações' : 'Adicionar plano' }}
+    </button>
+    @if (editingId()) {
+      <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+    }
+  </div>
+</form>
+
+<div class="list-head">
+  <h2>Planos cadastrados</h2>
+</div>
+
+@if (loading()) {
+  <p class="skeleton">Carregando…</p>
+} @else if (plans().length === 0) {
+  <div class="empty-state">Nenhum plano cadastrado ainda.</div>
+} @else {
+  <ul class="item-list">
+    @for (plan of plans(); track plan.id) {
+      <li class="card item-row">
+        <div class="item-info">
+          <div class="item-title-row">
+            <strong>{{ plan.title }}</strong>
+            <span class="badge badge-info">{{ statusLabel(plan.status) }}</span>
+          </div>
+          <p>{{ plan.description }}</p>
+          @if (plan.targetDate) {
+            <span class="hint">Data alvo: {{ plan.targetDate }}</span>
+          }
+        </div>
+        <div class="item-actions">
+          <button type="button" class="btn btn-secondary btn-sm" (click)="edit(plan)">Editar</button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="remove(plan)">Excluir</button>
+        </div>
+      </li>
+    }
+  </ul>
+}

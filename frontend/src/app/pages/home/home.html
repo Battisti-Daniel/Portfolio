@@ -1,0 +1,85 @@
+@if (profile(); as p) {
+  <section class="hero section">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <span class="eyebrow">Olá, eu sou</span>
+        <h1>{{ p.name }}</h1>
+        <p class="headline">{{ p.title }}</p>
+        <p class="bio">{{ p.bio }}</p>
+        <div class="hero-actions">
+          <a routerLink="/projetos" class="btn btn-primary">Ver projetos</a>
+          @if (p.email) {
+            <a [href]="'mailto:' + p.email" class="btn btn-secondary">Falar comigo</a>
+          }
+        </div>
+      </div>
+
+      <div class="hero-avatar">
+        @if (p.avatarUrl) {
+          <img [src]="p.avatarUrl" [alt]="p.name" />
+        } @else {
+          <div class="avatar-fallback">{{ initials(p.name) }}</div>
+        }
+      </div>
+    </div>
+  </section>
+} @else if (loading()) {
+  <div class="container skeleton">Carregando…</div>
+} @else {
+  <div class="container empty-state">Não foi possível carregar o perfil agora.</div>
+}
+
+@if (featuredProjects().length > 0) {
+  <section class="section featured">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Projetos em destaque</span>
+        <h2>Um pouco do que eu construí</h2>
+      </div>
+
+      <div class="project-grid">
+        @for (project of featuredProjects(); track project.id) {
+          <article class="card project-card">
+            @if (project.imageUrl) {
+              <img [src]="project.imageUrl" [alt]="project.title" class="project-image" />
+            }
+            <div class="project-body">
+              <h3>{{ project.title }}</h3>
+              <p>{{ project.description }}</p>
+              <div class="tag-list">
+                @for (tech of project.techStack; track tech) {
+                  <span class="tag">{{ tech }}</span>
+                }
+              </div>
+              <div class="project-links">
+                @if (project.repoUrl) {
+                  <a [href]="project.repoUrl" target="_blank" rel="noopener">Código ↗</a>
+                }
+                @if (project.demoUrl) {
+                  <a [href]="project.demoUrl" target="_blank" rel="noopener">Demo ↗</a>
+                }
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+
+      <a routerLink="/projetos" class="btn btn-secondary see-all">Ver todos os projetos</a>
+    </div>
+  </section>
+}
+
+<section class="section cta-band">
+  <div class="container cta-inner">
+    <div class="card cta-card">
+      <h3>Planos e próximos passos</h3>
+      <p>Veja o que estou estudando e construindo em seguida.</p>
+      <a routerLink="/planos" class="btn btn-secondary">Ver planos</a>
+    </div>
+    <div class="card cta-card">
+      <h3>Blog</h3>
+      <p>Leia sobre o que venho aprendendo pelo caminho.</p>
+      <a routerLink="/blog" class="btn btn-secondary">Ver blog</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,23 @@
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-links">
+      @if (profile()?.githubUrl) {
+        <a [href]="profile()!.githubUrl" target="_blank" rel="noopener">GitHub</a>
+      }
+      @if (profile()?.linkedinUrl) {
+        <a [href]="profile()!.linkedinUrl" target="_blank" rel="noopener">LinkedIn</a>
+      }
+      @if (profile()?.xUrl) {
+        <a [href]="profile()!.xUrl" target="_blank" rel="noopener">X</a>
+      }
+      @if (profile()?.email) {
+        <a [href]="'mailto:' + profile()!.email">{{ profile()!.email }}</a>
+      }
+    </div>
+
+    <div class="footer-meta">
+      <span>© {{ year }} {{ profile()?.name ?? 'Portfólio' }}</span>
+      <a routerLink="/admin" class="admin-link">Área administrativa</a>
+    </div>
+  </div>
+</footer>

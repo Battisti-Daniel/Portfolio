@@ -1,0 +1,13 @@
+.not-found {
+  text-align: center;
+  padding: 120px 0;
+}
+
+.not-found h1 {
+  font-size: 32px;
+}
+
+.not-found p {
+  color: var(--color-text-muted);
+  margin-bottom: 28px;
+}
